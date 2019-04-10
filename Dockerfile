@@ -3,22 +3,21 @@ MAINTAINER      X.Minamoto "xuyuan8720@189.cn"
 
 ENV 			DEBIAN_FRONTEND noninteractive
 
-RUN			/bin/echo 'root:administratorishere' |chpasswd;useradd xy;/bin/echo 'xy:iamlegal' |chpasswd
-
 ADD			luwak_build.tar.gz /root/
-
-RUN			/usr/bin/apt-get -y update; \
-				/usr/bin/apt-get -y full-upgrade; \
-				/usr/bin/apt-get -y install apt-utils; \
-				/usr/bin/apt-get -y autoremove; \
-				/usr/bin/apt-get -y install net-tools nano tzdata ssh rabbitmq-server redis-server mariadb-server nginx; \
-				/usr/bin/apt-get -y clean; \
-				/usr/bin/apt-get -y autoclean; \
-				rm -rf /tmp/*
 
 EXPOSE		2378-2380 5671 5672 15672 6379 3306 80 443 8000-9000
 
-RUN			ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
+RUN			/bin/echo 'root:administratorishere' |chpasswd;useradd xy;/bin/echo 'xy:iamlegal' |chpasswd; \
+				/usr/bin/apt-get -y update; \
+				/usr/bin/apt-get -y full-upgrade; \
+				/usr/bin/apt-get -y install apt-utils; \
+				/usr/bin/apt-get -y autoremove; \
+				/usr/bin/apt-get -y install net-tools nano tzdata ssh rabbitmq-server redis-server mariadb-server-10.1 nginx; \
+				/usr/bin/apt-get -y clean; \
+				/usr/bin/apt-get -y autoclean; \
+				 \
+				rm -rf /tmp/*; \
+				ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
 				echo "Asia/Shanghai" > /etc/timezone; \
 				dpkg-reconfigure -f noninteractive tzdata; \
 				sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mysql/mariadb.conf.d/50-server.cnf; \
