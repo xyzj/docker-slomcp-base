@@ -5,7 +5,7 @@ ENV 			DEBIAN_FRONTEND noninteractive
 
 ADD			luwak_build.tar.gz /root/
 
-EXPOSE		2378-2380 5671 5672 15672 6379 3306 80 443 8000-9000
+EXPOSE		2378-2380 5671 5672 15672 6379 3306 80 443
 
 RUN			/bin/echo 'root:administratorishere' |chpasswd;useradd xy;/bin/echo 'xy:iamlegal' |chpasswd; \
 				/usr/bin/apt-get -y update; \
