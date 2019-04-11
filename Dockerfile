@@ -3,7 +3,7 @@ MAINTAINER      X.Minamoto "xuyuan8720@189.cn"
 
 ENV 			DEBIAN_FRONTEND noninteractive
 
-ADD			luwak_build.tar.gz /root/
+COPY			buildfiles /root/
 
 EXPOSE		2378-2380 5671 5672 15672 6379 3306 80 443
 
