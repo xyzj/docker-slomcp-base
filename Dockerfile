@@ -20,6 +20,7 @@ RUN			/bin/echo 'root:administratorishere' |chpasswd;useradd xy;/bin/echo 'xy:ia
 				ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
 				echo "Asia/Shanghai" > /etc/timezone; \
 				dpkg-reconfigure -f noninteractive tzdata; \
+				/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
 				sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mysql/mariadb.conf.d/50-server.cnf; \
 				/bin/echo "net.ipv4.ip_forward=1">>/etc/sysctl.conf; \
 				/bin/echo 'Port 10022' >> /etc/ssh/sshd_config; \
