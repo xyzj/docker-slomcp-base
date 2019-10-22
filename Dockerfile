@@ -36,4 +36,4 @@ RUN			/bin/echo 'root:administratorishere' |chpasswd;useradd xy;/bin/echo 'xy:ia
 
 # CMD			/usr/sbin/sshd -D
 
-ENTRYPOINT	["/root/svr/bin/run.sh"]
+ENTRYPOINT	["/root/svr/run.sh"]
