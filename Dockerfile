@@ -3,8 +3,6 @@ MAINTAINER      X.Minamoto "xuyuan8720@189.cn"
 
 ENV 			DEBIAN_FRONTEND noninteractive
 
-COPY			buildfiles /root/
-
 EXPOSE		2378-2380 5671 5672 15672 6379 3306 80 443
 
 RUN	/bin/echo 'root:administratorishere' |chpasswd;useradd xy;/bin/echo 'xy:iamlegal' |chpasswd; \
@@ -21,11 +19,14 @@ RUN	/bin/echo 'root:administratorishere' |chpasswd;useradd xy;/bin/echo 'xy:iaml
 	rm -rf /tmp/*; \
 	ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
 	echo "Asia/Shanghai" > /etc/timezone; \
-	dpkg-reconfigure -f noninteractive tzdata; \
-	cp -f /root/mariadb/my.cnf /etc/mysql/my.cnf
+	dpkg-reconfigure -f noninteractive tzdata
+
+WORKDIR /root
+
+COPY			buildfiles /root/
 
 RUN	/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
-	sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mysql/mariadb.conf.d/50-server.cnf; \
+	cp -f /root/mariadb/my.cnf /etc/mysql/my.cnf; \
 	/bin/echo "net.ipv4.ip_forward=1">>/etc/sysctl.conf; \
 	/bin/echo 'Port 10022' >> /etc/ssh/sshd_config; \
 	/bin/echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config; \
@@ -41,5 +42,4 @@ RUN	/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
 	rabbitmq-plugins enable rabbitmq_management rabbitmq_web_stomp rabbitmq_stomp
 
 # CMD			/usr/sbin/sshd -D
-WORKDIR /root
 ENTRYPOINT	["/root/svr/bin/run.sh"]
