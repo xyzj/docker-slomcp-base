@@ -16,9 +16,10 @@ RUN	/usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0
 
 WORKDIR /root
 
-COPY		buildfiles /root/
+COPY	buildfiles /root/
 
-RUN	/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
+RUN	mv /root/ca /opt/ca; \
+	/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
 	cp -f /root/mariadb/my.cnf /etc/mysql/my.cnf; \
 	/bin/echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config; \
 	sed -i "s/bind 127.0.0.1 ::1/bind 0.0.0.0/g" /etc/redis/redis.conf; \
@@ -29,6 +30,5 @@ RUN	/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
 	chown -R root:root /root; \
 	service rabbitmq-server restart; \
 	rabbitmq-plugins enable rabbitmq_management rabbitmq_web_stomp rabbitmq_stomp
-
 # CMD			/usr/sbin/sshd -D
 ENTRYPOINT	["/root/svr/bin/run.sh"]
