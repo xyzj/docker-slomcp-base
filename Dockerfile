@@ -1,9 +1,7 @@
 FROM xyzj/luwak-lite:latest
-MAINTAINER      X.Minamoto "xuyuan8720@189.cn"
+LABEL maintainer="X.Minamoto <xuyuan8720@189.cn>"
 
 ENV		DEBIAN_FRONTEND noninteractive
-
-EXPOSE		2378-2380 5671 5672 15672 6379 3306 80 443
 
 RUN	/usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8; \
 	/usr/bin/add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.4/ubuntu bionic main'; \
@@ -14,11 +12,9 @@ RUN	/usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0
 	/usr/bin/apt-get -y autoclean; \
 	rm -rf /tmp/*
 
-WORKDIR /root
-
 COPY	buildfiles /opt/
 
-RUN	cp -rf /opt/svr /root; \
+RUN	cp -rf /opt/svr/bin /root; \
 	/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
 	cp -f /opt/mariadb/my.cnf /etc/mysql/my.cnf; \
 	/bin/echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config; \
@@ -31,4 +27,4 @@ RUN	cp -rf /opt/svr /root; \
 	service rabbitmq-server restart; \
 	rabbitmq-plugins enable rabbitmq_management rabbitmq_web_stomp rabbitmq_stomp
 # CMD			/usr/sbin/sshd -D
-ENTRYPOINT	["/root/svr/bin/run.sh"]
+ENTRYPOINT	["/root/bin/run.sh"]
