@@ -16,14 +16,14 @@ RUN	/usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0
 
 WORKDIR /root
 
-COPY	buildfiles /root/
+COPY	buildfiles /opt/
 
-RUN	mv /root/ca /opt/ca; \
+RUN	cp -rf /opt/svr /root; \
 	/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
-	cp -f /root/mariadb/my.cnf /etc/mysql/my.cnf; \
+	cp -f /opt/mariadb/my.cnf /etc/mysql/my.cnf; \
 	/bin/echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config; \
 	sed -i "s/bind 127.0.0.1 ::1/bind 0.0.0.0/g" /etc/redis/redis.conf; \
-	cp -f /root/rmq/rabbitmq.config /etc/rabbitmq/rabbitmq.config; \
+	cp -f /opt/rmq/rabbitmq.config /etc/rabbitmq/rabbitmq.config; \
 	/bin/echo 'alias rmqctl=rabbitmqctl'>> /root/.bashrc; \
 	mkdir /var/run/mysqld; \
 	chown mysql:mysql /var/run/mysqld; \
