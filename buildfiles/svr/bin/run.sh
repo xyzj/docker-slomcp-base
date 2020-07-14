@@ -31,4 +31,11 @@ rabbitmqctl add_user arx7 arbalest
 rabbitmqctl set_user_tags arx7 administrator
 rabbitmqctl set_permissions -p / arx7 ".*" ".*" ".*"
 
+# sslrenew start
+start-stop-daemon --start --name sslrenew --background -d /opt/svr/bin --exec /opt/svr/bin/sslrenew
+sleep 2
+
+# nginx start
+service nginx restart
+
 /bin/bash
