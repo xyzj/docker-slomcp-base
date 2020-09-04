@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8
 RUN	/usr/bin/apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'; \
 	/usr/bin/add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.5/ubuntu focal main'; \
 	/usr/bin/apt-get -y update; \
-	/usr/bin/apt-get -y install rabbitmq-server redis-server mariadb-server-10.5; \
+	/usr/bin/apt-get -y install rabbitmq-server redis-server mariadb-server-10.5 nginx; \
 	/usr/bin/apt-get -y autoremove; \
 	/usr/bin/apt-get -y clean; \
 	/usr/bin/apt-get -y autoclean; \
