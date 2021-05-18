@@ -8,6 +8,7 @@ docker run -itd \
     -p3306:3306 \
     -v /tmp:/tmp/ttt \
     -v /home/mysql_data:/var/lib/mysql \
-    xyzj/luwak-common:latest
+    xyzj/luwak-common:latest \
+    /opt/bin/run.sh
 
 echo "The container will be ready in 30 seconds"
