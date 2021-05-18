@@ -7,7 +7,7 @@ start-stop-daemon --stop -p /run/sslrenew.pid
 service rabbitmq-server start
 
 chown -R mysql:mysql /var/lib/mysql
-rm -f /var/lib/mysql/ib_log*
+#rm -f /var/lib/mysql/ib_log*
 
 # sslrenew start
 start-stop-daemon --start -m -p /run/sslrenew.pid --background -d /opt/bin --exec /opt/bin/sslrenew
@@ -31,10 +31,10 @@ start-stop-daemon --start -m -p /run/etcd.pid --background -d /opt/etcd --exec /
 sleep 2
 
 # nginx start
-service nginx stop
-sleep 1
-service nginx start
-sleep 2
+#service nginx stop
+#sleep 1
+#service nginx start
+#sleep 2
 
 echo "Starting rabbitmq"
 service rabbitmq-server restart
@@ -42,6 +42,7 @@ sleep 1
 rabbitmqctl add_user arx7 arbalest
 rabbitmqctl set_user_tags arx7 administrator
 rabbitmqctl set_permissions -p / arx7 ".*" ".*" ".*"
+rabbitmqadmin declare exchange --vhost=/ name=luwak_topic type=topic durable=true auto_delete=false
 sleep 2
 
 /opt/bin/runext.sh
