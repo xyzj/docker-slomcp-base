@@ -27,7 +27,7 @@ start-stop-daemon --start -m -p /run/mysqld.pid --background --exec /usr/sbin/my
 sleep 2
 
 echo "Starting etcd"
-start-stop-daemon --start -m -p /run/etcd.pid --background -d /opt/etcd --exec /opt/etcd/etcd -- -name luwak --data-dir /opt/etcd/luwak.etcd --cert-file=/opt/ca/server.pem --key-file=/opt/ca/server-key.pem --advertise-client-urls=https://0.0.0.0:2378,http://0.0.0.0:2379 --listen-client-urls=https://0.0.0.0:2378,http://0.0.0.0:2379
+start-stop-daemon --start -m -p /run/etcd.pid --background -d /opt/etcd --exec /opt/etcd/etcd -- -name luwak --data-dir /opt/etcd/luwak.etcd --cert-file=/opt/ca/localhost.pem --key-file=/opt/ca/localhost-key.pem --advertise-client-urls=https://0.0.0.0:2378,http://0.0.0.0:2379 --listen-client-urls=https://0.0.0.0:2378,http://0.0.0.0:2379
 sleep 2
 
 # nginx start

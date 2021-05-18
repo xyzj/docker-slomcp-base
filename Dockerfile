@@ -21,6 +21,8 @@ RUN	/bin/echo "requirepass arbalest" >> /etc/redis/redis.conf; \
 	/bin/echo 'alias rmqctl=rabbitmqctl'>> /root/.bashrc; \
 	mkdir /var/run/mysqld; \
 	chown mysql:mysql /var/run/mysqld; \
+	service mariadb start; \
+	mysql < /opt/bin/init.sql; \
 	chown -R root:root /root; \
 	service rabbitmq-server restart; \
 	rabbitmq-plugins enable rabbitmq_management rabbitmq_web_stomp rabbitmq_stomp
